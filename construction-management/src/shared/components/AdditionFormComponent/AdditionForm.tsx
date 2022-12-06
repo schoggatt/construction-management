@@ -7,6 +7,11 @@ export interface AdditionFormProps {
   projects: Project[];
 }
 
+export interface Errors {
+  name?: string;
+  description?: string;
+}
+
 const newProject: INewProject = {
   name: "",
   description: "",
@@ -15,6 +20,7 @@ const newProject: INewProject = {
 export const AdditionForm = (props: AdditionFormProps) => {
   const [project, setProject] = useState(newProject);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [errors, setErrors] = useState<Errors>({});
 
   let data: Project[] = [
     new Project(1, "Project: CLASSIFIED", "xXxXC-aAdQ12"),
@@ -26,8 +32,18 @@ export const AdditionForm = (props: AdditionFormProps) => {
     setProjects(props.projects);
   }, []);
 
+  function validate() {
+    const _errors: Errors = {};
+    if (!project.name) _errors.name = "Name is required";
+    if (!project.description) _errors.description = "Description is required";
+    setErrors(_errors);
+    return _errors;
+  }
+
   function onSubmit(e: any) {
     e.preventDefault();
+    const formIsValid = Object.keys(validate()).length === 0; // it's valid if validate returns an empty object
+    if (!formIsValid) return; // return early if the form is invalid
     setProjects([...projects, { ...project, id: projects.length + 1 }]);
     setProject(newProject);
   }
@@ -43,6 +59,7 @@ export const AdditionForm = (props: AdditionFormProps) => {
         id={"name"}
         label={"Name"}
         type={"text"}
+        error={errors.name}
         value={project.name}
         onChange={(e) => onChange(e)}
       />
@@ -50,6 +67,7 @@ export const AdditionForm = (props: AdditionFormProps) => {
         id={"description"}
         label={"Description"}
         type={"text"}
+        error={errors.description}
         value={project.description}
         onChange={(e) => onChange(e)}
       />

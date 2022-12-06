@@ -55,10 +55,7 @@ const config: PlaywrightTestConfig = {
       name: "firefox",
       use: {
         ...devices["Desktop Firefox"],
-        launchOptions: {
-          // Put your chromium-specific args here
-          args: ["--disable-web-security"],
-        },
+        ignoreHTTPSErrors: true,
       },
     },
 
