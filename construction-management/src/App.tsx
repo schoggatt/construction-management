@@ -7,9 +7,11 @@ import { Home } from "./views/Home";
 import { useRoutes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { deleteProject, getProjects } from "./services/projectService";
+import { Loader } from "./shared/components/Loader";
 
 function App() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const routes = useRoutes([
     {
@@ -33,11 +35,8 @@ function App() {
   ]);
 
   useEffect(() => {
+    setLoading(true);
     loadProjects();
-
-    return () => {
-      console.log("Unmounted");
-    };
   }, []);
 
   async function removeProject(id: number) {
@@ -49,6 +48,7 @@ function App() {
   async function loadProjects() {
     const res = await getProjects();
     setProjects(res);
+    setLoading(false);
   }
 
   function renderProject(project: Project) {
@@ -65,6 +65,7 @@ function App() {
     <div className="App">
       {routes}
       <h1>Projects</h1>
+      <Loader loading={loading} />
       <ul style={{ listStyle: "none" }}>
         {projects.map((p) => renderProject(p))}
       </ul>
