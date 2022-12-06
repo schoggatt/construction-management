@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start": "run-p start-app start-api",
+    "start-app": "vite",
+    "start-api": "json-server --watch db.json --port 3001",
     "test": "vitest",
     "build": "tsc && vite build",
     "preview": "vite preview"
@@ -32,7 +34,10 @@
     "@types/react-router-bootstrap": "^0.24.5",
     "@vitejs/plugin-react": "^2.2.0",
     "agrippa": "^2.0.0",
+    "cross-env": "^7.0.3",
     "jsdom": "^20.0.3",
+    "json-server": "^0.17.1",
+    "npm-run-all": "^4.1.5",
     "typescript": "^4.6.4",
     "vite": "^3.2.5"
   }
