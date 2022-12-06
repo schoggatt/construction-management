@@ -58,7 +58,6 @@ export const AdditionForm = (props: AdditionFormProps) => {
       <Input
         id={"name"}
         label={"Name"}
-        type={"text"}
         error={errors.name}
         value={project.name}
         onChange={(e) => onChange(e)}
@@ -66,7 +65,6 @@ export const AdditionForm = (props: AdditionFormProps) => {
       <Input
         id={"description"}
         label={"Description"}
-        type={"text"}
         error={errors.description}
         value={project.description}
         onChange={(e) => onChange(e)}

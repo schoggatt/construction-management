@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.scss";
 import { Project } from "./models/class/Project";
-import { AgGridReact } from "ag-grid-react"; // the AG Grid React Component
 import { AdditionForm } from "./shared/components/AdditionFormComponent";
 import { NavigationBar } from "./shared/components/NavigationBar";
 import { Home } from "./views/Home";
-import { Route, Routes, Link, useRoutes } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { deleteProject, getProjects } from "./services/projectService";
 
 function App() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -32,23 +32,23 @@ function App() {
     },
   ]);
 
-  let data: Project[] = [
-    new Project(1, "Project: CLASSIFIED", "xXxXC-aAdQ12"),
-    new Project(2, "Project: GIGACHAD", "Chadmin"),
-    new Project(3, "Project: TERRENCE", "Terrel Quigglesbottom"),
-  ];
-
   useEffect(() => {
-    setProjects(data);
+    loadProjects();
+
+    return () => {
+      console.log("Unmounted");
+    };
   }, []);
 
-  function removeProject(id: number) {
+  async function removeProject(id: number) {
     const p = projects.filter((p) => p.id !== id);
-    setProjects(p);
+    const res = await deleteProject(id);
+    if (res) setProjects(p);
   }
 
-  function reloadProjects() {
-    setProjects(data);
+  async function loadProjects() {
+    const res = await getProjects();
+    setProjects(res);
   }
 
   function renderProject(project: Project) {
@@ -56,7 +56,7 @@ function App() {
       <li key={project.id}>
         <h2>{project.name}</h2>
         <p>{project.description}</p>
-        <button onClick={(x) => removeProject(project.id)}>Remove</button>
+        <button onClick={() => removeProject(project.id)}>Remove</button>
       </li>
     );
   }
@@ -68,7 +68,7 @@ function App() {
       <ul style={{ listStyle: "none" }}>
         {projects.map((p) => renderProject(p))}
       </ul>
-      <button onClick={(p) => reloadProjects()}>Reload</button>
+      <button onClick={(p) => loadProjects()}>Reload</button>
       <AdditionForm projects={projects} />
     </div>
   );

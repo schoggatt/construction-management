@@ -1,7 +1,9 @@
 import { Project } from "../models/class/Project";
 
+const baseURI = "http://localhost:3001";
+
 export async function createProject(project: Project): Promise<Project> {
-  const response = await fetch("/api/projects", {
+  const response = await fetch(baseURI + "/projects", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -15,7 +17,7 @@ export async function createProject(project: Project): Promise<Project> {
 }
 
 export async function getProjects(): Promise<Project[]> {
-  const response = await fetch("/api/projects");
+  const response = await fetch(baseURI + "/projects");
   if (!response.ok) {
     throw new Error(response.statusText);
   }
@@ -23,7 +25,7 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function getProject(id: string): Promise<Project> {
-  const response = await fetch(`/api/projects/${id}`);
+  const response = await fetch(baseURI + `/projects/${id}`);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
@@ -31,7 +33,7 @@ export async function getProject(id: string): Promise<Project> {
 }
 
 export async function updateProject(project: Project): Promise<Project> {
-  const response = await fetch("/api/projects", {
+  const response = await fetch(baseURI + "/projects", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -44,13 +46,12 @@ export async function updateProject(project: Project): Promise<Project> {
   return response.json() as Promise<Project>;
 }
 
-export async function deleteProject(id: string): Promise<boolean> {
-  const response = await fetch("/api/projects", {
+export async function deleteProject(id: number): Promise<boolean> {
+  const response = await fetch(baseURI + `/projects/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id }),
   });
   if (!response.ok) {
     throw new Error(response.statusText);

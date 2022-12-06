@@ -5,7 +5,6 @@ export interface InputProps {
   label: string;
   type?: "text" | "number" | "password" | "email" | "password" | "date";
   value: string;
-  defaultValue?: string;
   onChange: (e: any) => void;
   error?: string;
 }
@@ -15,20 +14,13 @@ export const Input = ({
   label,
   type = "text",
   value,
-  defaultValue = "",
   error,
   onChange,
 }: InputProps) => {
   return (
     <div>
       <label htmlFor={id}>{label}</label>
-      <input
-        type={type}
-        id={id}
-        value={value}
-        defaultValue={defaultValue}
-        onChange={(e) => onChange(e)}
-      />
+      <input type={type} id={id} value={value} onChange={(e) => onChange(e)} />
       <div>{error}</div>
     </div>
   );
