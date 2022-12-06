@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Project } from "../../../models/class/Project";
 import { INewProject } from "../../../models/interface/INewProject";
-import Input from "../../Input/Input";
+import Input from "../Input/Input";
 
 export interface AdditionFormProps {
   projects: Project[];

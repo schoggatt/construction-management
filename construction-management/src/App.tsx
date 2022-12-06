@@ -60,6 +60,7 @@ function App() {
       </li>
     );
   }
+  throw new Error("REEEEE");
 
   return (
     <div className="App">
