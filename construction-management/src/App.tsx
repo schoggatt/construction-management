@@ -21,8 +21,8 @@ function App() {
           element: <Home />,
         },
         // {
-        //   path: "stocks/search",
-        //   element: <SearchStocksComponent />,
+        //   path: "/search",
+        //   element: < />,
         // },
       ],
     },

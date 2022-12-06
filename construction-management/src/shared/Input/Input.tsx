@@ -9,23 +9,26 @@ export interface InputProps {
   onChange: (e: any) => void;
 }
 
-export const Input = (props: InputProps) => {
+export const Input = ({
+  id,
+  label,
+  type = "text",
+  value,
+  defaultValue = "",
+  onChange,
+}: InputProps) => {
   return (
     <div>
-      <label htmlFor={props.id}>{props.label}</label>
+      <label htmlFor={id}>{label}</label>
       <input
-        type={props.type}
-        id={props.id}
-        value={props.value}
-        defaultValue={props.defaultValue}
-        onChange={(e) => props.onChange(e)}
+        type={type}
+        id={id}
+        value={value}
+        defaultValue={defaultValue}
+        onChange={(e) => onChange(e)}
       />
     </div>
   );
-};
-
-Input.defaultProps = {
-  type: "text",
 };
 
 export default Input;
