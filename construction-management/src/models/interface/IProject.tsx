@@ -1,5 +1,5 @@
-export interface IProject {
+import { INewProject } from "./INewProject";
+
+export interface IProject extends INewProject {
   id: number;
-  name: string;
-  description: string;
 }
