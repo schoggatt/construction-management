@@ -69,3 +69,17 @@ it("should have a default type of text", () => {
   expect(screen.getByLabelText("My Input")).toHaveValue("Test");
   expect(screen.getByLabelText("My Input")).toHaveAttribute("type", "text");
 });
+
+it("should render an error message", () => {
+  render(
+    <Input
+      id="input"
+      label="My Input"
+      type="text"
+      value=""
+      error="This is an error"
+      onChange={() => {}}
+    />
+  );
+  expect(screen.getByText("This is an error")).toBeInTheDocument();
+});

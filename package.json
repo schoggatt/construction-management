@@ -1,0 +1,21 @@
+{
+  "name": "construction-management",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schoggatt/construction-management.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/schoggatt/construction-management/issues"
+  },
+  "homepage": "https://github.com/schoggatt/construction-management#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.28.1"
+  }
+}

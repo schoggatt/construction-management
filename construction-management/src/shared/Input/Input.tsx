@@ -7,6 +7,7 @@ export interface InputProps {
   value: string;
   defaultValue?: string;
   onChange: (e: any) => void;
+  error?: string;
 }
 
 export const Input = ({
@@ -15,6 +16,7 @@ export const Input = ({
   type = "text",
   value,
   defaultValue = "",
+  error,
   onChange,
 }: InputProps) => {
   return (
@@ -27,6 +29,7 @@ export const Input = ({
         defaultValue={defaultValue}
         onChange={(e) => onChange(e)}
       />
+      <div>{error}</div>
     </div>
   );
 };
