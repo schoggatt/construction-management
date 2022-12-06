@@ -59,6 +59,7 @@ it("should render an input with the provided type", () => {
     />
   );
   expect(screen.getByLabelText("My Input")).toHaveValue(123);
+  expect(screen.getByLabelText("My Input")).toHaveAttribute("type", "number");
 });
 
 it("should have a default type of text", () => {
