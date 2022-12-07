@@ -21,8 +21,8 @@ export const NavigationBar = (props: NavigationBarProps) => {
               <LinkContainer to="/">
                 <Nav.Link>Home</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/">
-                <Nav.Link>Placeholder</Nav.Link>
+              <LinkContainer to="/aboutme">
+                <Nav.Link>About Me</Nav.Link>
               </LinkContainer>
             </Nav>
           </Navbar.Collapse>

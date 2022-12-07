@@ -1,8 +1,51 @@
+import { useState, useEffect } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { Project } from "../../models/class/Project";
+import { deleteProject, getProjects } from "../../services/projectService";
+import { AdditionForm } from "../../shared/components/AdditionFormComponent";
+import { Loader } from "../../shared/components/Loader";
+
 export interface HomeProps {}
 
 export const Home = (props: HomeProps) => {
-	
-	return (
-		<div></div>
-	);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLoading(true);
+    loadProjects();
+  }, []);
+
+  async function removeProject(id: number) {
+    const p = projects.filter((p) => p.id !== id);
+    const res = await deleteProject(id);
+    if (res) setProjects(p);
+  }
+
+  async function loadProjects() {
+    const res = await getProjects();
+    setProjects(res);
+    setLoading(false);
+  }
+
+  function renderProject(project: Project) {
+    return (
+      <li key={project.id}>
+        <h2>{project.name}</h2>
+        <p>{project.description}</p>
+        <button onClick={() => removeProject(project.id)}>Remove</button>
+      </li>
+    );
+  }
+  return (
+    <div>
+      <h1>Projects</h1>
+      <Loader loading={loading} />
+      <ul style={{ listStyle: "none" }}>
+        {projects.map((p) => renderProject(p))}
+      </ul>
+      <button onClick={(p) => loadProjects()}>Reload</button>
+      <AdditionForm projects={projects} />
+    </div>
+  );
 };
