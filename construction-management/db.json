@@ -2,17 +2,17 @@
   "projects": [
     {
       "name": "My First Project",
-      "id": "1",
+      "id": 1,
       "description": "My Project Description"
     },
     {
       "name": "My Crazy Project",
-      "id": "2",
+      "id": 2,
       "description": "Whoa Description"
     },
     {
       "name": "My Third Project",
-      "id": "3",
+      "id": 3,
       "description": "My Third Project Description"
     },
     {
@@ -29,6 +29,21 @@
       "name": "My Sixth Project",
       "description": "Gang",
       "id": 6
+    },
+    {
+      "name": "A Seventh Project",
+      "description": "Gotcha",
+      "id": 7
+    },
+    {
+      "name": "My Spooky Project",
+      "description": "Scary project.",
+      "id": 8
+    },
+    {
+      "name": "My Ninth Project",
+      "description": "Whoa",
+      "id": 9
     }
   ]
 }

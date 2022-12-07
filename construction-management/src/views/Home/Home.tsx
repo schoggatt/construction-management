@@ -32,11 +32,15 @@ export const Home = (props: HomeProps) => {
 
   function renderProject(project: Project) {
     return (
-      <div key={project.id}>
-        <h2>{project.name}</h2>
-        <p>{project.description}</p>
-        <button onClick={() => removeProject(project.id)}>Remove</button>
-      </div>
+      <Col key={project.id}>
+        <Link to={"/project/manage/edit/" + project.id}>
+          <div>
+            <h2>{project.name}</h2>
+            <p>{project.description}</p>
+            <button onClick={() => removeProject(project.id)}>Remove</button>
+          </div>
+        </Link>
+      </Col>
     );
   }
 
@@ -54,17 +58,10 @@ export const Home = (props: HomeProps) => {
       <Loader loading={loading} />
       <Container>
         {getProjectChunks().map((chunk) => (
-          <Row>
-            {chunk.map((p) => (
-              <Col>
-                <Link to={"projects/" + p.id}>{renderProject(p)}</Link>
-              </Col>
-            ))}
-          </Row>
+          <Row key={chunk[0].id}>{chunk.map((p) => renderProject(p))}</Row>
         ))}
       </Container>
-      <button onClick={(p) => loadProjects()}>Reload</button>
-      <AdditionForm />
+      <Link to="/project/manage/add">Add Project</Link>
     </div>
   );
 };

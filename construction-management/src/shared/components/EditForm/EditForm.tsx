@@ -30,7 +30,7 @@ export const EditForm = (props: EditFormProps) => {
       e.preventDefault();
       const formIsValid = Object.keys(validate()).length === 0; // it's valid if validate returns an empty object
       if (!formIsValid) return; // return early if the form is invalid
-      await updateProject(project, project.id.toString());
+      await updateProject(project);
       props.setOriginalProject(project);
       setProject(project);
     } catch (e) {

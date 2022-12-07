@@ -24,7 +24,7 @@ export async function getProjects(): Promise<Project[]> {
   return response.json() as Promise<Project[]>;
 }
 
-export async function getProject(id: string): Promise<Project> {
+export async function getProject(id: number): Promise<Project> {
   const response = await fetch(baseURI + `/projects/${id}`);
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -32,11 +32,8 @@ export async function getProject(id: string): Promise<Project> {
   return response.json() as Promise<Project>;
 }
 
-export async function updateProject(
-  project: Project,
-  id: string
-): Promise<Project> {
-  const response = await fetch(baseURI + `/projects/${id}`, {
+export async function updateProject(project: Project): Promise<Project> {
+  const response = await fetch(baseURI + `/projects/${project.id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

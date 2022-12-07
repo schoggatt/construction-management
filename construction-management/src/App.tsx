@@ -22,8 +22,12 @@ function App() {
           element: <AboutMe />,
         },
         {
-          path: "/projects/:projectId",
-          element: <ManageProject />,
+          path: "/project/manage/add",
+          element: <ManageProject isEdit={false} />,
+        },
+        {
+          path: "/project/manage/edit/:projectId",
+          element: <ManageProject isEdit={true} />,
         },
       ],
     },
