@@ -1,38 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Project } from "../../../models/class/Project";
-import { INewProject } from "../../../models/interface/INewProject";
-import {
-  createProject,
-  getProject,
-  getProjects,
-} from "../../../services/projectService";
+import { updateProject } from "../../../services/projectService";
 import Input from "../Input/Input";
-import { Loader } from "../Loader";
 
-export interface AdditionFormProps {}
+export interface EditFormProps {
+  originalProject: Project;
+  setOriginalProject: React.Dispatch<React.SetStateAction<Project | undefined>>;
+}
 
 export interface Errors {
   name?: string;
   description?: string;
 }
 
-const newProject: INewProject = {
-  name: "",
-  description: "",
-};
-
-export const AdditionForm = (props: AdditionFormProps) => {
-  const [project, setProject] = useState(newProject);
-  const [projects, setProjects] = useState<Project[]>([]);
+export const EditForm = (props: EditFormProps) => {
+  const [project, setProject] = useState<Project>(props.originalProject);
   const [errors, setErrors] = useState<Errors>({});
-
-  useEffect(() => {
-    async function loadProjects() {
-      const res = await getProjects();
-      setProjects(res);
-    }
-    loadProjects();
-  }, []);
 
   function validate() {
     const _errors: Errors = {};
@@ -42,14 +25,14 @@ export const AdditionForm = (props: AdditionFormProps) => {
     return _errors;
   }
 
-  async function onSubmit(e: any) {
+  async function onEdit(e: any) {
     try {
       e.preventDefault();
       const formIsValid = Object.keys(validate()).length === 0; // it's valid if validate returns an empty object
       if (!formIsValid) return; // return early if the form is invalid
-      await createProject({ ...project, id: projects.length + 1 });
-      setProjects([...projects, { ...project, id: projects.length + 1 }]);
-      setProject(newProject);
+      await updateProject(project, project.id.toString());
+      props.setOriginalProject(project);
+      setProject(project);
     } catch (e) {
       console.log(e);
     }
@@ -61,8 +44,8 @@ export const AdditionForm = (props: AdditionFormProps) => {
 
   return (
     <>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <h2>Add Project</h2>
+      <form onSubmit={(e) => onEdit(e)}>
+        <h2>Edit Project</h2>
         <Input
           id={"name"}
           label={"Name"}
@@ -77,7 +60,7 @@ export const AdditionForm = (props: AdditionFormProps) => {
           value={project.description}
           onChange={(e) => onChange(e)}
         />
-        <button type="submit">Add</button>
+        <button type="submit">Edit</button>
       </form>
     </>
   );

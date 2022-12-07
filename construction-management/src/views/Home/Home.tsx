@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { ErrorBoundary } from "react-error-boundary";
+import { Link } from "react-router-dom";
 import { Project } from "../../models/class/Project";
 import { deleteProject, getProjects } from "../../services/projectService";
 import { AdditionForm } from "../../shared/components/AdditionFormComponent";
@@ -55,13 +56,15 @@ export const Home = (props: HomeProps) => {
         {getProjectChunks().map((chunk) => (
           <Row>
             {chunk.map((p) => (
-              <Col>{renderProject(p)}</Col>
+              <Col>
+                <Link to={"projects/" + p.id}>{renderProject(p)}</Link>
+              </Col>
             ))}
           </Row>
         ))}
       </Container>
       <button onClick={(p) => loadProjects()}>Reload</button>
-      <AdditionForm projects={projects} />
+      <AdditionForm />
     </div>
   );
 };

@@ -22,7 +22,7 @@ function App() {
           element: <AboutMe />,
         },
         {
-          path: "/projects/:id",
+          path: "/projects/:projectId",
           element: <ManageProject />,
         },
       ],

@@ -6,9 +6,9 @@
       "description": "My Project Description"
     },
     {
-      "name": "My Dos Project",
+      "name": "My Crazy Project",
       "id": "2",
-      "description": "My Other Project Description"
+      "description": "Whoa Description"
     },
     {
       "name": "My Third Project",
@@ -24,6 +24,11 @@
       "name": "The Fifth Project",
       "description": "Awesome.",
       "id": 5
+    },
+    {
+      "name": "My Sixth Project",
+      "description": "Gang",
+      "id": 6
     }
   ]
 }

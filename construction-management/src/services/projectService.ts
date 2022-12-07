@@ -32,9 +32,12 @@ export async function getProject(id: string): Promise<Project> {
   return response.json() as Promise<Project>;
 }
 
-export async function updateProject(project: Project): Promise<Project> {
-  const response = await fetch(baseURI + "/projects", {
-    method: "PUT",
+export async function updateProject(
+  project: Project,
+  id: string
+): Promise<Project> {
+  const response = await fetch(baseURI + `/projects/${id}`, {
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
