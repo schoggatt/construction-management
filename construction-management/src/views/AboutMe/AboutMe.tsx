@@ -2,7 +2,7 @@ export interface AboutMeProps {}
 
 export const AboutMe = (props: AboutMeProps) => {
   return (
-    <div>
+    <div style={{ width: 1000 }}>
       <h1>About Us</h1>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

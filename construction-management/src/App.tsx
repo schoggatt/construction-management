@@ -5,6 +5,7 @@ import { Home } from "./views/Home";
 import { useRoutes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AboutMe } from "./views/AboutMe";
+import { ManageProject } from "./views/ManageProject";
 
 function App() {
   const routes = useRoutes([
@@ -20,6 +21,10 @@ function App() {
           path: "/aboutme",
           element: <AboutMe />,
         },
+        {
+          path: "/projects/:id",
+          element: <ManageProject />,
+        },
       ],
     },
     {
@@ -28,7 +33,7 @@ function App() {
     },
   ]);
 
-  return <div className="App">{routes}</div>;
+  return <>{routes}</>;
 }
 
 export default App;

@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { Project } from "../../../models/class/Project";
 import { INewProject } from "../../../models/interface/INewProject";
-import ErrorBoundary from "../../error/ErrorFallback/ErrorFallback";
+import {
+  createProject,
+  getProject,
+  getProjects,
+} from "../../../services/projectService";
 import Input from "../Input/Input";
+import { Loader } from "../Loader";
 
-export interface AdditionFormProps {
-  projects: Project[];
-}
+export interface AdditionFormProps {}
 
 export interface Errors {
   name?: string;
@@ -22,15 +25,16 @@ export const AdditionForm = (props: AdditionFormProps) => {
   const [project, setProject] = useState(newProject);
   const [projects, setProjects] = useState<Project[]>([]);
   const [errors, setErrors] = useState<Errors>({});
-
-  let data: Project[] = [
-    new Project(1, "Project: CLASSIFIED", "xXxXC-aAdQ12"),
-    new Project(2, "Project: GIGACHAD", "Chadmin"),
-    new Project(3, "Project: TERRENCE", "Terrel Quigglesbottom"),
-  ];
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    setProjects(props.projects);
+    async function loadProjects() {
+      setLoading(true);
+      const res = await getProjects();
+      setProjects(res);
+      setLoading(false);
+    }
+    loadProjects();
   }, []);
 
   function validate() {
@@ -41,12 +45,20 @@ export const AdditionForm = (props: AdditionFormProps) => {
     return _errors;
   }
 
-  function onSubmit(e: any) {
-    e.preventDefault();
-    const formIsValid = Object.keys(validate()).length === 0; // it's valid if validate returns an empty object
-    if (!formIsValid) return; // return early if the form is invalid
-    setProjects([...projects, { ...project, id: projects.length + 1 }]);
-    setProject(newProject);
+  async function onSubmit(e: any) {
+    try {
+      e.preventDefault();
+      setLoading(true);
+      const formIsValid = Object.keys(validate()).length === 0; // it's valid if validate returns an empty object
+      if (!formIsValid) return; // return early if the form is invalid
+      await createProject({ ...project, id: projects.length + 1 });
+      setProjects([...projects, { ...project, id: projects.length + 1 }]);
+      setProject(newProject);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
   }
 
   function onChange(e: any) {
@@ -54,23 +66,26 @@ export const AdditionForm = (props: AdditionFormProps) => {
   }
 
   return (
-    <form onSubmit={(e) => onSubmit(e)}>
-      <h2>Add Project</h2>
-      <Input
-        id={"name"}
-        label={"Name"}
-        error={errors.name}
-        value={project.name}
-        onChange={(e) => onChange(e)}
-      />
-      <Input
-        id={"description"}
-        label={"Description"}
-        error={errors.description}
-        value={project.description}
-        onChange={(e) => onChange(e)}
-      />
-      <button type="submit">Add</button>
-    </form>
+    <>
+      <Loader loading={loading} />
+      <form onSubmit={(e) => onSubmit(e)}>
+        <h2>Add Project</h2>
+        <Input
+          id={"name"}
+          label={"Name"}
+          error={errors.name}
+          value={project.name}
+          onChange={(e) => onChange(e)}
+        />
+        <Input
+          id={"description"}
+          label={"Description"}
+          error={errors.description}
+          value={project.description}
+          onChange={(e) => onChange(e)}
+        />
+        <button type="submit">Add</button>
+      </form>
+    </>
   );
 };

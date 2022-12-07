@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import { ErrorBoundary } from "react-error-boundary";
 import { Project } from "../../models/class/Project";
 import { deleteProject, getProjects } from "../../services/projectService";
@@ -30,20 +31,35 @@ export const Home = (props: HomeProps) => {
 
   function renderProject(project: Project) {
     return (
-      <li key={project.id}>
+      <div key={project.id}>
         <h2>{project.name}</h2>
         <p>{project.description}</p>
         <button onClick={() => removeProject(project.id)}>Remove</button>
-      </li>
+      </div>
     );
   }
+
+  function getProjectChunks() {
+    const chunks = [];
+    for (let i = 0; i < projects.length; i += 3) {
+      chunks.push(projects.slice(i, i + 3));
+    }
+    return chunks;
+  }
+
   return (
-    <div>
+    <div style={{ width: 1000 }}>
       <h1>Projects</h1>
       <Loader loading={loading} />
-      <ul style={{ listStyle: "none" }}>
-        {projects.map((p) => renderProject(p))}
-      </ul>
+      <Container>
+        {getProjectChunks().map((chunk) => (
+          <Row>
+            {chunk.map((p) => (
+              <Col>{renderProject(p)}</Col>
+            ))}
+          </Row>
+        ))}
+      </Container>
       <button onClick={(p) => loadProjects()}>Reload</button>
       <AdditionForm projects={projects} />
     </div>
